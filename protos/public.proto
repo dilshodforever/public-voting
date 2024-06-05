@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+option go_package = "genprotos/";
+
+package protos;
+
+import "party.proto";
+import "election.proto" ;
+
+service PublicService {
+    rpc CreatePublic(Public) returns (Void) {}
+    rpc DeletePublic(ById) returns (Void) {}
+    rpc UpdatePublic(Public) returns(Void){}
+    rpc GetByIdPublic(ById) returns (Public) {}
+    rpc GetAllPublics(Void) returns (GetAllPublic) {}
+}
+
+message Public {
+    string id = 1;
+    string first_name=2;
+    string last_name=3;
+    string birthday =4;
+    string gender=5;
+    string nation=6;
+    Party party=7;
+}
+
+message GetAllPublic{
+  repeated Public publics=1;
+}

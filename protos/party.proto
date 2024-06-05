@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option go_package = "genprotos/";
+
+package protos;
+import "election.proto" ;
+
+service PartyService {
+    rpc CreateParty(Party) returns (Void) {}
+    rpc DeleteParty(ById) returns (Void) {}
+    rpc UpdateParty(Party) returns(Void){}
+    rpc GetByIdParty(ById) returns (Party) {}
+    rpc GetAllPartys(Void) returns (GetAllParty) {}
+}
+
+message Party {
+    string id = 1;
+    string name =2;
+    string slogan =3;
+    string open_date =4;
+    string description =5;
+}
+
+message GetAllParty{
+  repeated Party partys=1;
+}
