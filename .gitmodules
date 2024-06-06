@@ -1,0 +1,3 @@
+[submodule "voting-submodule"]
+	path = voting-submodule
+	url = git@github.com:dilshodforever/voting-submodule.git

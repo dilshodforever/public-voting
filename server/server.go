@@ -21,6 +21,7 @@ func main() {
 	}
 
 	s := grpc.NewServer()
+	pb.RegisterPublicServiceServer(s, service.NewPublicService(db))
 	pb.RegisterPartyServiceServer(s, service.NewPartyService(db))
 	log.Printf("server listening at %v", liss.Addr())
 	if err := s.Serve(liss); err != nil {
