@@ -22,4 +22,5 @@ type Public interface {
 	GetAllPublic(_ *pb.Void) (*pb.GetAllPublic, error)
 	UpdatePublic(pub *pb.Public) (*pb.Void, error)
 	DeletePublic(id *pb.ById) (*pb.Void, error)
+	CheakPublic(id *pb.ById) (*pb.Void, error)
 }

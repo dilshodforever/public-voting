@@ -81,3 +81,24 @@ func (p *PartyStorage) DeleteParty(id *pb.ById) (*pb.Void, error) {
 	_, err := p.db.Exec(query, id.Id)
 	return nil, err
 }
+
+
+
+func (p *PartyStorage) GetAllPartyForCandidate() (*pb.GetAllParty, error) {
+	partys := &pb.GetAllParty{}
+	row, err := p.db.Query(`select id, name, slogan, open_date, description from party
+							where id =$1 `, )
+	if err != nil {
+		return nil, err
+	}
+
+	for row.Next() {
+		party := &pb.Party{}
+		err = row.Scan(&party.Id, &party.Name, &party.Slogan, &party.OpenDate, &party.Description)
+		if err != nil {
+			return nil, err
+		}
+		partys.Partys = append(partys.Partys, party)
+	}
+	return partys, nil
+}

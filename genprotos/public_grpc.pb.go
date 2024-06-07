@@ -27,6 +27,7 @@ type PublicServiceClient interface {
 	UpdatePublic(ctx context.Context, in *Public, opts ...grpc.CallOption) (*Void, error)
 	GetByIdPublic(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Public, error)
 	GetAllPublics(ctx context.Context, in *Void, opts ...grpc.CallOption) (*GetAllPublic, error)
+	CheakPublic(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Void, error)
 }
 
 type publicServiceClient struct {
@@ -82,6 +83,15 @@ func (c *publicServiceClient) GetAllPublics(ctx context.Context, in *Void, opts 
 	return out, nil
 }
 
+func (c *publicServiceClient) CheakPublic(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Void, error) {
+	out := new(Void)
+	err := c.cc.Invoke(ctx, "/protos.PublicService/CheakPublic", in, out, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 // PublicServiceServer is the server API for PublicService service.
 // All implementations must embed UnimplementedPublicServiceServer
 // for forward compatibility
@@ -91,6 +101,7 @@ type PublicServiceServer interface {
 	UpdatePublic(context.Context, *Public) (*Void, error)
 	GetByIdPublic(context.Context, *ById) (*Public, error)
 	GetAllPublics(context.Context, *Void) (*GetAllPublic, error)
+	CheakPublic(context.Context, *ById) (*Void, error)
 	mustEmbedUnimplementedPublicServiceServer()
 }
 
@@ -112,6 +123,9 @@ func (UnimplementedPublicServiceServer) GetByIdPublic(context.Context, *ById) (*
 }
 func (UnimplementedPublicServiceServer) GetAllPublics(context.Context, *Void) (*GetAllPublic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllPublics not implemented")
+}
+func (UnimplementedPublicServiceServer) CheakPublic(context.Context, *ById) (*Void, error) {
+	return nil, status.Errorf(codes.Unimplemented, "method CheakPublic not implemented")
 }
 func (UnimplementedPublicServiceServer) mustEmbedUnimplementedPublicServiceServer() {}
 
@@ -216,6 +230,24 @@ func _PublicService_GetAllPublics_Handler(srv interface{}, ctx context.Context, 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _PublicService_CheakPublic_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ById)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(PublicServiceServer).CheakPublic(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/protos.PublicService/CheakPublic",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(PublicServiceServer).CheakPublic(ctx, req.(*ById))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 // PublicService_ServiceDesc is the grpc.ServiceDesc for PublicService service.
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
@@ -242,6 +274,10 @@ var PublicService_ServiceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetAllPublics",
 			Handler:    _PublicService_GetAllPublics_Handler,
+		},
+		{
+			MethodName: "CheakPublic",
+			Handler:    _PublicService_CheakPublic_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

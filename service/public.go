@@ -59,3 +59,14 @@ func (c *PublicService) DeletePublic(ctx context.Context, id *pb.ById) (*pb.Void
 
 	return pb, err
 }
+
+
+
+func (c *PublicService) CheakPublic(ctx context.Context, id *pb.ById) (*pb.Void, error) {
+	pb, err := c.stg.Public().CheakPublic(id)
+	if err != nil {
+		log.Print(err)
+	}
+
+	return pb, err
+}

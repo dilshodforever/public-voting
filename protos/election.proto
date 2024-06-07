@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+option go_package = "genprotos/";
+
+package protos;
+
+service ElectionService {
+    rpc CreateElection(Election) returns (Void) {}
+    rpc DeleteElection(ById) returns (Void) {}
+    rpc UpdateElection(Election) returns(Void){}
+    rpc GetByIdElection(ById) returns (Election) {}
+    rpc GetAllElections(Void) returns (GetAllElection) {}
+}
+
+message Void{}
+  
+message ById{
+    string Id = 1;
+}
+message Election {
+    string id = 1;
+    string name =2;
+    string date =3;
+}
+
+message GetAllElection{
+    repeated Election elections=1;
+}
