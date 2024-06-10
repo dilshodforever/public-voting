@@ -13,7 +13,7 @@ service PublicVoteService {
     rpc DeletePublicVote(ById) returns (Void) {}
     rpc UpdatePublicVote(PublicVote) returns(Void){}
     rpc GetByIdPublicVote(ById) returns (PublicVote) {}
-    rpc GetAllPublucVotes(Void) returns (GetAllPublicVote) {}
+    rpc GetAllPublucVotes(PublicVote) returns (GetAllPublicVote) {}
 }
 
 message PublicVote {

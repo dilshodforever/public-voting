@@ -26,7 +26,7 @@ type PublicServiceClient interface {
 	DeletePublic(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Void, error)
 	UpdatePublic(ctx context.Context, in *Public, opts ...grpc.CallOption) (*Void, error)
 	GetByIdPublic(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Public, error)
-	GetAllPublics(ctx context.Context, in *Void, opts ...grpc.CallOption) (*GetAllPublic, error)
+	GetAllPublics(ctx context.Context, in *Public, opts ...grpc.CallOption) (*GetAllPublic, error)
 	CheakPublic(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Void, error)
 }
 
@@ -74,7 +74,7 @@ func (c *publicServiceClient) GetByIdPublic(ctx context.Context, in *ById, opts 
 	return out, nil
 }
 
-func (c *publicServiceClient) GetAllPublics(ctx context.Context, in *Void, opts ...grpc.CallOption) (*GetAllPublic, error) {
+func (c *publicServiceClient) GetAllPublics(ctx context.Context, in *Public, opts ...grpc.CallOption) (*GetAllPublic, error) {
 	out := new(GetAllPublic)
 	err := c.cc.Invoke(ctx, "/protos.PublicService/GetAllPublics", in, out, opts...)
 	if err != nil {
@@ -100,7 +100,7 @@ type PublicServiceServer interface {
 	DeletePublic(context.Context, *ById) (*Void, error)
 	UpdatePublic(context.Context, *Public) (*Void, error)
 	GetByIdPublic(context.Context, *ById) (*Public, error)
-	GetAllPublics(context.Context, *Void) (*GetAllPublic, error)
+	GetAllPublics(context.Context, *Public) (*GetAllPublic, error)
 	CheakPublic(context.Context, *ById) (*Void, error)
 	mustEmbedUnimplementedPublicServiceServer()
 }
@@ -121,7 +121,7 @@ func (UnimplementedPublicServiceServer) UpdatePublic(context.Context, *Public) (
 func (UnimplementedPublicServiceServer) GetByIdPublic(context.Context, *ById) (*Public, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetByIdPublic not implemented")
 }
-func (UnimplementedPublicServiceServer) GetAllPublics(context.Context, *Void) (*GetAllPublic, error) {
+func (UnimplementedPublicServiceServer) GetAllPublics(context.Context, *Public) (*GetAllPublic, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllPublics not implemented")
 }
 func (UnimplementedPublicServiceServer) CheakPublic(context.Context, *ById) (*Void, error) {
@@ -213,7 +213,7 @@ func _PublicService_GetByIdPublic_Handler(srv interface{}, ctx context.Context, 
 }
 
 func _PublicService_GetAllPublics_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Void)
+	in := new(Public)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -225,7 +225,7 @@ func _PublicService_GetAllPublics_Handler(srv interface{}, ctx context.Context, 
 		FullMethod: "/protos.PublicService/GetAllPublics",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PublicServiceServer).GetAllPublics(ctx, req.(*Void))
+		return srv.(PublicServiceServer).GetAllPublics(ctx, req.(*Public))
 	}
 	return interceptor(ctx, in, info, handler)
 }

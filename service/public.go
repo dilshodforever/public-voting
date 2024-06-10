@@ -24,7 +24,7 @@ func (c *PublicService) CreatePublic(ctx context.Context, public *pb.Public) (*p
 	return pb, err
 }
 
-func (c *PublicService) GetAllPublics(ctx context.Context, pb *pb.Void) (*pb.GetAllPublic, error) {
+func (c *PublicService) GetAllPublics(ctx context.Context, pb *pb.Public) (*pb.GetAllPublic, error) {
 	publics, err := c.stg.Public().GetAllPublic(pb)
 	if err != nil {
 		log.Print(err)

@@ -9,7 +9,7 @@ service ElectionService {
     rpc DeleteElection(ById) returns (Void) {}
     rpc UpdateElection(Election) returns(Void){}
     rpc GetByIdElection(ById) returns (Election) {}
-    rpc GetAllElections(Void) returns (GetAllElection) {}
+    rpc GetAllElections(Election) returns (GetAllElection) {}
 }
 
 message Void{}

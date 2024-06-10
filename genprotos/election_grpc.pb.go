@@ -26,7 +26,7 @@ type ElectionServiceClient interface {
 	DeleteElection(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Void, error)
 	UpdateElection(ctx context.Context, in *Election, opts ...grpc.CallOption) (*Void, error)
 	GetByIdElection(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Election, error)
-	GetAllElections(ctx context.Context, in *Void, opts ...grpc.CallOption) (*GetAllElection, error)
+	GetAllElections(ctx context.Context, in *Election, opts ...grpc.CallOption) (*GetAllElection, error)
 }
 
 type electionServiceClient struct {
@@ -73,7 +73,7 @@ func (c *electionServiceClient) GetByIdElection(ctx context.Context, in *ById, o
 	return out, nil
 }
 
-func (c *electionServiceClient) GetAllElections(ctx context.Context, in *Void, opts ...grpc.CallOption) (*GetAllElection, error) {
+func (c *electionServiceClient) GetAllElections(ctx context.Context, in *Election, opts ...grpc.CallOption) (*GetAllElection, error) {
 	out := new(GetAllElection)
 	err := c.cc.Invoke(ctx, "/protos.ElectionService/GetAllElections", in, out, opts...)
 	if err != nil {
@@ -90,7 +90,7 @@ type ElectionServiceServer interface {
 	DeleteElection(context.Context, *ById) (*Void, error)
 	UpdateElection(context.Context, *Election) (*Void, error)
 	GetByIdElection(context.Context, *ById) (*Election, error)
-	GetAllElections(context.Context, *Void) (*GetAllElection, error)
+	GetAllElections(context.Context, *Election) (*GetAllElection, error)
 	mustEmbedUnimplementedElectionServiceServer()
 }
 
@@ -110,7 +110,7 @@ func (UnimplementedElectionServiceServer) UpdateElection(context.Context, *Elect
 func (UnimplementedElectionServiceServer) GetByIdElection(context.Context, *ById) (*Election, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetByIdElection not implemented")
 }
-func (UnimplementedElectionServiceServer) GetAllElections(context.Context, *Void) (*GetAllElection, error) {
+func (UnimplementedElectionServiceServer) GetAllElections(context.Context, *Election) (*GetAllElection, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllElections not implemented")
 }
 func (UnimplementedElectionServiceServer) mustEmbedUnimplementedElectionServiceServer() {}
@@ -199,7 +199,7 @@ func _ElectionService_GetByIdElection_Handler(srv interface{}, ctx context.Conte
 }
 
 func _ElectionService_GetAllElections_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Void)
+	in := new(Election)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -211,7 +211,7 @@ func _ElectionService_GetAllElections_Handler(srv interface{}, ctx context.Conte
 		FullMethod: "/protos.ElectionService/GetAllElections",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(ElectionServiceServer).GetAllElections(ctx, req.(*Void))
+		return srv.(ElectionServiceServer).GetAllElections(ctx, req.(*Election))
 	}
 	return interceptor(ctx, in, info, handler)
 }

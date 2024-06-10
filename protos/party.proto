@@ -10,7 +10,7 @@ service PartyService {
     rpc DeleteParty(ById) returns (Void) {}
     rpc UpdateParty(Party) returns(Void){}
     rpc GetByIdParty(ById) returns (Party) {}
-    rpc GetAllPartys(Void) returns (GetAllParty) {}
+    rpc GetAllPartys(Party) returns (GetAllParty) {}
 }
 
 message Party {

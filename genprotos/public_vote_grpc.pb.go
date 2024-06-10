@@ -26,7 +26,7 @@ type PublicVoteServiceClient interface {
 	DeletePublicVote(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Void, error)
 	UpdatePublicVote(ctx context.Context, in *PublicVote, opts ...grpc.CallOption) (*Void, error)
 	GetByIdPublicVote(ctx context.Context, in *ById, opts ...grpc.CallOption) (*PublicVote, error)
-	GetAllPublucVotes(ctx context.Context, in *Void, opts ...grpc.CallOption) (*GetAllPublicVote, error)
+	GetAllPublucVotes(ctx context.Context, in *PublicVote, opts ...grpc.CallOption) (*GetAllPublicVote, error)
 }
 
 type publicVoteServiceClient struct {
@@ -73,7 +73,7 @@ func (c *publicVoteServiceClient) GetByIdPublicVote(ctx context.Context, in *ByI
 	return out, nil
 }
 
-func (c *publicVoteServiceClient) GetAllPublucVotes(ctx context.Context, in *Void, opts ...grpc.CallOption) (*GetAllPublicVote, error) {
+func (c *publicVoteServiceClient) GetAllPublucVotes(ctx context.Context, in *PublicVote, opts ...grpc.CallOption) (*GetAllPublicVote, error) {
 	out := new(GetAllPublicVote)
 	err := c.cc.Invoke(ctx, "/protos.PublicVoteService/GetAllPublucVotes", in, out, opts...)
 	if err != nil {
@@ -90,7 +90,7 @@ type PublicVoteServiceServer interface {
 	DeletePublicVote(context.Context, *ById) (*Void, error)
 	UpdatePublicVote(context.Context, *PublicVote) (*Void, error)
 	GetByIdPublicVote(context.Context, *ById) (*PublicVote, error)
-	GetAllPublucVotes(context.Context, *Void) (*GetAllPublicVote, error)
+	GetAllPublucVotes(context.Context, *PublicVote) (*GetAllPublicVote, error)
 	mustEmbedUnimplementedPublicVoteServiceServer()
 }
 
@@ -110,7 +110,7 @@ func (UnimplementedPublicVoteServiceServer) UpdatePublicVote(context.Context, *P
 func (UnimplementedPublicVoteServiceServer) GetByIdPublicVote(context.Context, *ById) (*PublicVote, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetByIdPublicVote not implemented")
 }
-func (UnimplementedPublicVoteServiceServer) GetAllPublucVotes(context.Context, *Void) (*GetAllPublicVote, error) {
+func (UnimplementedPublicVoteServiceServer) GetAllPublucVotes(context.Context, *PublicVote) (*GetAllPublicVote, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllPublucVotes not implemented")
 }
 func (UnimplementedPublicVoteServiceServer) mustEmbedUnimplementedPublicVoteServiceServer() {}
@@ -199,7 +199,7 @@ func _PublicVoteService_GetByIdPublicVote_Handler(srv interface{}, ctx context.C
 }
 
 func _PublicVoteService_GetAllPublucVotes_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Void)
+	in := new(PublicVote)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -211,7 +211,7 @@ func _PublicVoteService_GetAllPublucVotes_Handler(srv interface{}, ctx context.C
 		FullMethod: "/protos.PublicVoteService/GetAllPublucVotes",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(PublicVoteServiceServer).GetAllPublucVotes(ctx, req.(*Void))
+		return srv.(PublicVoteServiceServer).GetAllPublucVotes(ctx, req.(*PublicVote))
 	}
 	return interceptor(ctx, in, info, handler)
 }

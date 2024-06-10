@@ -13,7 +13,7 @@ service CandidateService {
     rpc DeleteCandidate(ById) returns (Void) {}
     rpc UpdateCandidate(Candidate) returns(Void){}
     rpc GetByIdCandidate(ById) returns (Candidate) {}
-    rpc GetAllCandidates(Void) returns (GetAllCandidate) {}
+    rpc GetAllCandidates(Candidate) returns (GetAllCandidate) {}
 }
 
 message Candidate {

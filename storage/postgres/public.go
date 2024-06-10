@@ -57,7 +57,7 @@ func (p *PublicStorage) GetByIdPublic(id *pb.ById) (*pb.Public, error) {
 	return &pub, nil
 }
 
-func (p *PublicStorage) GetAllPublic(_ *pb.Void) (*pb.GetAllPublic, error) {
+func (p *PublicStorage) GetAllPublic(_ *pb.Public) (*pb.GetAllPublic, error) {
 	pubs := &pb.GetAllPublic{}
 	row, err := p.db.Query(`SELECT p.id, p.first_name, p.last_name, p.birthday, p.gender, p.nation, 
 		pa.name, pa.slogan, pa.open_date, pa.description

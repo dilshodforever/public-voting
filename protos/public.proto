@@ -12,7 +12,7 @@ service PublicService {
     rpc DeletePublic(ById) returns (Void) {}
     rpc UpdatePublic(Public) returns(Void){}
     rpc GetByIdPublic(ById) returns (Public) {}
-    rpc GetAllPublics(Void) returns (GetAllPublic) {}
+    rpc GetAllPublics(Public) returns (GetAllPublic) {}
     rpc CheakPublic(ById)    returns (Void){}
 }
 

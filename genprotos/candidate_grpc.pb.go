@@ -26,7 +26,7 @@ type CandidateServiceClient interface {
 	DeleteCandidate(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Void, error)
 	UpdateCandidate(ctx context.Context, in *Candidate, opts ...grpc.CallOption) (*Void, error)
 	GetByIdCandidate(ctx context.Context, in *ById, opts ...grpc.CallOption) (*Candidate, error)
-	GetAllCandidates(ctx context.Context, in *Void, opts ...grpc.CallOption) (*GetAllCandidate, error)
+	GetAllCandidates(ctx context.Context, in *Candidate, opts ...grpc.CallOption) (*GetAllCandidate, error)
 }
 
 type candidateServiceClient struct {
@@ -73,7 +73,7 @@ func (c *candidateServiceClient) GetByIdCandidate(ctx context.Context, in *ById,
 	return out, nil
 }
 
-func (c *candidateServiceClient) GetAllCandidates(ctx context.Context, in *Void, opts ...grpc.CallOption) (*GetAllCandidate, error) {
+func (c *candidateServiceClient) GetAllCandidates(ctx context.Context, in *Candidate, opts ...grpc.CallOption) (*GetAllCandidate, error) {
 	out := new(GetAllCandidate)
 	err := c.cc.Invoke(ctx, "/protos.CandidateService/GetAllCandidates", in, out, opts...)
 	if err != nil {
@@ -90,7 +90,7 @@ type CandidateServiceServer interface {
 	DeleteCandidate(context.Context, *ById) (*Void, error)
 	UpdateCandidate(context.Context, *Candidate) (*Void, error)
 	GetByIdCandidate(context.Context, *ById) (*Candidate, error)
-	GetAllCandidates(context.Context, *Void) (*GetAllCandidate, error)
+	GetAllCandidates(context.Context, *Candidate) (*GetAllCandidate, error)
 	mustEmbedUnimplementedCandidateServiceServer()
 }
 
@@ -110,7 +110,7 @@ func (UnimplementedCandidateServiceServer) UpdateCandidate(context.Context, *Can
 func (UnimplementedCandidateServiceServer) GetByIdCandidate(context.Context, *ById) (*Candidate, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetByIdCandidate not implemented")
 }
-func (UnimplementedCandidateServiceServer) GetAllCandidates(context.Context, *Void) (*GetAllCandidate, error) {
+func (UnimplementedCandidateServiceServer) GetAllCandidates(context.Context, *Candidate) (*GetAllCandidate, error) {
 	return nil, status.Errorf(codes.Unimplemented, "method GetAllCandidates not implemented")
 }
 func (UnimplementedCandidateServiceServer) mustEmbedUnimplementedCandidateServiceServer() {}
@@ -199,7 +199,7 @@ func _CandidateService_GetByIdCandidate_Handler(srv interface{}, ctx context.Con
 }
 
 func _CandidateService_GetAllCandidates_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
-	in := new(Void)
+	in := new(Candidate)
 	if err := dec(in); err != nil {
 		return nil, err
 	}
@@ -211,7 +211,7 @@ func _CandidateService_GetAllCandidates_Handler(srv interface{}, ctx context.Con
 		FullMethod: "/protos.CandidateService/GetAllCandidates",
 	}
 	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
-		return srv.(CandidateServiceServer).GetAllCandidates(ctx, req.(*Void))
+		return srv.(CandidateServiceServer).GetAllCandidates(ctx, req.(*Candidate))
 	}
 	return interceptor(ctx, in, info, handler)
 }

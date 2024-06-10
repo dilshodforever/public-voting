@@ -11,7 +11,7 @@ type InitRoot interface {
 type Party interface {
 	CreateParty(party *pb.Party) (*pb.Void, error)
 	GetByIdParty(id *pb.ById) (*pb.Party, error)
-	GetAllParty(_ *pb.Void) (*pb.GetAllParty, error)
+	GetAllParty(_ *pb.Party) (*pb.GetAllParty, error)
 	UpdateParty(party *pb.Party) (*pb.Void, error)
 	DeleteParty(id *pb.ById) (*pb.Void, error)
 }
@@ -19,7 +19,7 @@ type Party interface {
 type Public interface {
 	CreatePublic(pub *pb.Public) (*pb.Void, error)
 	GetByIdPublic(id *pb.ById) (*pb.Public, error)
-	GetAllPublic(_ *pb.Void) (*pb.GetAllPublic, error)
+	GetAllPublic(p *pb.Public) (*pb.GetAllPublic, error)
 	UpdatePublic(pub *pb.Public) (*pb.Void, error)
 	DeletePublic(id *pb.ById) (*pb.Void, error)
 	CheakPublic(id *pb.ById) (*pb.Void, error)

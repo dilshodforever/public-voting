@@ -25,7 +25,7 @@ func (c *PartyService) CreateParty(ctx context.Context, Party *pb.Party) (*pb.Vo
 	return pb, err
 }
 
-func (c *PartyService) GetAllPartys(ctx context.Context, pb *pb.Void) (*pb.GetAllParty, error) {
+func (c *PartyService) GetAllPartys(ctx context.Context, pb *pb.Party) (*pb.GetAllParty, error) {
 	Partys, err := c.stg.Party().GetAllParty(pb)
 	if err != nil {
 		log.Print(err)

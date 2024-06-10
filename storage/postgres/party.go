@@ -2,6 +2,7 @@ package postgres
 
 import (
 	"database/sql"
+	"fmt"
 	pb "root/genprotos"
 
 	"github.com/google/uuid"
@@ -46,12 +47,28 @@ func (p *PartyStorage) GetByIdParty(id *pb.ById) (*pb.Party, error) {
 		return &party, nil
 }
 
-func (p *PartyStorage) GetAllParty(_ *pb.Void) (*pb.GetAllParty, error) {
+func (p *PartyStorage) GetAllParty(pa *pb.Party) (*pb.GetAllParty, error) {
 	partys := &pb.GetAllParty{}
-	row, err := p.db.Query("select id, name, slogan, open_date, description from party")
+	var arr []interface{}
+	count:=1
+	query:=`select id, name, slogan, open_date, description from party where delated_at=0`
+	if len(pa.Description)>0{
+		query+=fmt.Sprintf(` and description=$%d`, count)
+		arr = append(arr, pa.Description)
+	}
+	if len(pa.Name)>0{
+		query+=fmt.Sprintf(` and name=$%d`, count)
+		arr = append(arr, pa.Name)
+	}
+	if len(pa.Slogan)>0{
+		query+=fmt.Sprintf(` and slogan=$%d`, count)
+		arr = append(arr, pa.Slogan)
+	}
+	row, err := p.db.Query(query, arr...)
 	if err != nil {
 		return nil, err
 	}
+
 
 	for row.Next() {
 		party := &pb.Party{}
@@ -84,7 +101,7 @@ func (p *PartyStorage) DeleteParty(id *pb.ById) (*pb.Void, error) {
 
 
 
-func (p *PartyStorage) GetAllPartyForCandidate() (*pb.GetAllParty, error) {
+func (p *PartyStorage) GetAllPartyForCandidate(pa *pb.Party) (*pb.GetAllParty, error) {
 	partys := &pb.GetAllParty{}
 	row, err := p.db.Query(`select id, name, slogan, open_date, description from party
 							where id =$1 `, )
